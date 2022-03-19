@@ -1,10 +1,10 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Choice, Question
+from .models import Choice, Question, Score
 
 
 class IndexView(generic.ListView):
@@ -43,9 +43,22 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id)))
 def get_queryset(self):
 
     return Question.objects.filter(
         pub_date__lte=timezone.now()
     ).order_by('-pub_date')[:5]
+
+
+class Scores(generic.FormView):
+    model = Score
+    template_name = 'polls/scores.html'
+
+def scores(request):
+    return render(request, "polls/scores.html",)
+
+#def savescores(request, score_value):
+#    new_score = Score(score_value)
+ #   new_score.save()
+  #  return HttpResponseRedirect('/result')

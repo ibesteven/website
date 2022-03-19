@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, Question
+from .models import Choice, Question, Score
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
@@ -12,6 +12,14 @@ class QuestionAdmin(admin.ModelAdmin):
         (None,               {'fields': ['question_text']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
+
+    class ScoreAdmin(admin.ModelAdmin):
+        fieldsets = [
+            ("user",               {'fields': ['user']}),
+            ('score', {'fields': ['scores']}),
+            ("date and time", {"fields": ["datetime"], 'classes': ['collapse']})
+        ]
+
     inlines = [ChoiceInline]
     list_display = ('question_text', 'pub_date', 'was_published_recently')
 
@@ -19,3 +27,5 @@ admin.site.register(Question, QuestionAdmin)
 list_display = ('question_text', 'pub_date', 'was_published_recently')
 list_filter = ['pub_date']
 search_fields = ['question_text']
+
+admin.site.register(Score, )
