@@ -1,0 +1,9 @@
+{% if score_list %}
+    <ul>
+    {% for score in score_list %}
+    <li>{{ score.score }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No scores are available.</p>
+{% endif %}

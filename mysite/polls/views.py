@@ -55,8 +55,21 @@ class Scores(generic.FormView):
     model = Score
     template_name = 'polls/scores.html'
 
-def scores(request):
-    return render(request, "polls/scores.html",)
+def enterscores(request):
+    return render(request, "polls/scores.html")
+
+class Scoredisplay(generic.ListView):
+    template_name = 'polls/scoredetail.html'
+    context_object_name = 'score_list'
+
+    def get_queryset(self):
+        return Score.objects.order_by('-score')[:10]
+
+#def showscores(request):
+#    return Score.objects.order_by('-score')[:10]
+
+
+
 
 #def savescores(request, score_value):
 #    new_score = Score(score_value)

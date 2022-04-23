@@ -31,4 +31,4 @@ class Choice(models.Model):
 
 class Score(models.Model):
     score = models.IntegerField()
-    submit_date = models.DateTimeField("date submitted")
+    submit_date = models.DateTimeField(timezone.now())
